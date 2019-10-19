@@ -110,7 +110,7 @@ zipped = glob.glob(os.path.join(patient_folder,'Neeb',"*")+'/*.gz')
 if zipped:
     print("unzipping the following files: {0}".format(zipped))
     call(['gunzip']+zipped)
-call(['/data/henry6/alyssa/scripts/rename_files_neeb.py', os.path.join(patient_folder, 'Neeb')])
+call(['/neeb_docker/rename_files_neeb.py', os.path.join(patient_folder, 'Neeb')])
 
 print("If you made it to this point that means I was able to acquire some data and will be processing it!")
 
@@ -126,9 +126,9 @@ print("I put the list of DICOMs that I'll be processing in Neeb/Neeb_ProcessingL
 print("Starting processing now...")
 
 # run Neeb processing
-call(['/data/henry1/data_management/scripts/predictMS', processing_list, '/data/henry1/predictMS/etc/MyleinProcessingMatrix.txt', os.path.join(patient_folder,'Neeb/Neeb_RunInfo.txt'), os.path.join(patient_folder,'Neeb/Neeb_RunResults.txt')])
+call(['/neeb_docker/predictMS', processing_list, '/neeb_docker/MyleinProcessingMatrix.txt', os.path.join(patient_folder,'Neeb/Neeb_RunInfo.txt'), os.path.join(patient_folder,'Neeb/Neeb_RunResults.txt')])
 # print pid
 
-call(['/data/henry6/alyssa/scripts/convert_neeb_niftis3.py', os.path.join(patient_folder, 'Neeb')])
+call(['/neeb_docker/convert_neeb_niftis3.py', os.path.join(patient_folder, 'Neeb')])
 
 print("...all done processing! Until next time :)")
