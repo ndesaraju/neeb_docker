@@ -129,6 +129,6 @@ print("Starting processing now...")
 call(['/home/neeb_docker_utils/predictMS', processing_list, '/home/neeb_docker_utils/MyleinProcessingMatrix.txt', os.path.join(patient_folder,'Neeb/Neeb_RunInfo.txt'), os.path.join(patient_folder,'Neeb/Neeb_RunResults.txt')])
 # print pid
 
-call(['/neeb_docker_utils/convert_neeb_niftis3.py', os.path.join(patient_folder, 'Neeb')])
+call(['/home/neeb_docker_utils/convert_neeb_niftis3.py', os.path.join(patient_folder, 'Neeb')])
 
 print("...all done processing! Until next time :)")
