@@ -21,9 +21,9 @@ currently written for single subject, use run_on_grid.py for batch processing
 print("Welcome to Neeb! I'll be processing the data you fed me nom nom.")
 
 #moving flywheel directories
-shutil.copytree("/v0/flywheel/input/epibh30", "/v0/flywheel/output/E1/1")
-shutil.copytree("/v0/flywheel/input/epibh90", "/v0/flywheel/output/E1/2")
-shutil.copytree("/v0/flywheel/input/epibb90", "/v0/flywheel/output/E1/3")
+shutil.copytree("/v0/flywheel/input/epi_bh30", "/v0/flywheel/output/E1/1")
+shutil.copytree("/v0/flywheel/input/epi_bh90", "/v0/flywheel/output/E1/2")
+shutil.copytree("/v0/flywheel/input/epi_bb90", "/v0/flywheel/output/E1/3")
 shutil.copytree("/v0/flywheel/input/MEGET1", "/v0/flywheel/output/E1/4")
 shutil.copytree("/v0/flywheel/input/MEGET1_intensities", "/v0/flywheel/output/E1/5")
 shutil.copytree("/v0/flywheel/input/MEGET2star", "/v0/flywheel/output/E1/6")
