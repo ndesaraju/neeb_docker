@@ -1,0 +1,71 @@
+#!/usr/bin/env python
+import argparse
+import gzip
+import os
+from os import path
+from uuid import uuid4
+from shutil import copyfileobj, rmtree
+from subprocess import call, check_call
+
+def smartlink(src, dst, dcmext, gzext):
+    
+    cwd = os.getcwd()
+    totext = dcmext + gzext
+
+    os.makedirs(dst)
+    names = os.listdir(src)
+    for n in names:
+        srcname = path.join(src, n)
+        dstname = path.join(dst, n)
+        if path.isdir(srcname):
+            smartlink(srcname, dstname, dcmext, gzext)
+        elif n[-len(totext):].lower() == totext:
+            unzipto(srcname, dstname[:-len(gzext)])
+        elif n[-len(dcmext):].lower() == dcmext:
+            os.symlink(path.join(cwd, srcname), dstname)
+
+def unzipto(zipfile, dst):
+    with open(dst, 'wb') as newfile:
+        copyfileobj(gzip.open(zipfile, 'rb'), newfile)
+
+def dcm2nii(pth, dcmext='.dcm', gzext='.gz'):
+
+    tmpdir = '/tmp/' + str(uuid4())
+    try:
+        smartlink(pth, tmpdir, dcmext, gzext)
+        check_call(['dcm2nii', '-o', out] + argv + [tmpdir])
+    finally:
+        rmtree(tmpdir)
+
+help="""
+A warpper for dcm2nii which can handel gzipped files,
+warning: you must have rwx permissions to dicom_directory
+"""
+parser = argparse.ArgumentParser(help)
+parser.add_argument('-o', help='Output Directory, default current direcotry')
+parser.add_argument('dicom_directory', nargs='+',
+                    help="directory with dicom files")
+parser.add_argument('--ext', default='.dcm', 
+                    help="files with EXT or EXT.gz are treated as dicom files")
+
+oldexit = parser.exit
+def newexit(*args, **kargs):
+    print("\ndcm2nii usage:\n")
+    call(['dcm2nii'])
+    oldexit(*args, **kargs)
+parser.exit = newexit
+
+A, argv = parser.parse_known_args()
+if A.o:
+    out = A.o
+else:
+    out = os.getcwd()
+
+if len(A.dicom_directory) != 1:
+    parser.error("Must specify a directory with dicom files")
+pth = A.dicom_directory[0]
+if not path.isdir(pth):
+    parser.error(A.dicom_directory[0] + " is not a directory")
+
+error = dcm2nii(pth, A.ext)
+exit(error)
