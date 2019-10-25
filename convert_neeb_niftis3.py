@@ -16,13 +16,13 @@ def main(subject):
             files = glob.glob(folder+'/*.ima') # ".ima
             if (files):
                 rename(files)
-                call(['dcmgz2nii', '-o', folder, folder])
+                call(['/home/neeb_docker_utils/dcmgz2nii', '-o', folder, folder])
         else:
             for content in contents:
                 files = glob.glob(content+'/*.ima') # "ima"
                 if(files):
                     rename(files)
-                    call(['dcmgz2nii', '-o', content, content])
+                    call(['/home/neeb_docker_utils/dcmgz2nii', '-o', content, content])
     return
 
 def rename(files):

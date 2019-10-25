@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #from hlab_pytools.launch_ipcluster import ucsf_grid_job
 
 from subprocess import call
