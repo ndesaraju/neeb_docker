@@ -33,7 +33,7 @@ def dcm2nii(pth, dcmext='.dcm', gzext='.gz'):
     tmpdir = '/tmp/' + str(uuid4())
     try:
         smartlink(pth, tmpdir, dcmext, gzext)
-        check_call(['dcm2nii', '-o', out] + argv + [tmpdir])
+        check_call(['/home/neeb_docker_utils/dcm2nii', '-o', out] + argv + [tmpdir])
     finally:
         rmtree(tmpdir)
 
@@ -51,7 +51,7 @@ parser.add_argument('--ext', default='.dcm',
 oldexit = parser.exit
 def newexit(*args, **kargs):
     print("\ndcm2nii usage:\n")
-    call(['dcm2nii'])
+    call(['/home/neeb_docker_utils/dcm2nii'])
     oldexit(*args, **kargs)
 parser.exit = newexit
 
