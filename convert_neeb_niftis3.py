@@ -33,7 +33,7 @@ def rename(files):
 def smooth_maps(subject):
     myelin = glob.glob(subject+'/Myelin/MyelinMaps/*.nii.gz')[0]
     for mm in [0.5, 0.8, 1]:
-        call(['fslmaths', myelin, '-s', str(mm), subject+'/Myelin/MyelinMapsSmooth/MyelinMap_Smoothed_'+('%02d' % int(mm*10))+'.nii.gz'])
+        call(['/home/neeb_docker_utils/fslmaths', myelin, '-s', str(mm), subject+'/Myelin/MyelinMapsSmooth/MyelinMap_Smoothed_'+('%02d' % int(mm*10))+'.nii.gz'])
 
 for subject in subjects:
     subject = os.path.abspath(subject)
