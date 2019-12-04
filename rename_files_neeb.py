@@ -25,4 +25,4 @@ for series in list_series:
 
         print(series+'/File_anon'+('%04d' % count)+'.ima')
         call(['mv', filename, series+'/File_anon'+('%04d' % count)+'.ima'])
-        count ++ 
+        count += 1
