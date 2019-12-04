@@ -10,7 +10,8 @@ list_series = glob.glob(folder+'/*')
 for series in list_series:
 
     list_files = sorted(glob.glob(series+'/*[dD][cC][mM]*'))
-
+    print("files listed below")
+    print(list_files)
     for filename in list_files:
         print(filename)
         
