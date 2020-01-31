@@ -3,6 +3,7 @@ from subprocess import call
 import glob
 import os
 import sys
+import logging as log
 
 subjects = sys.argv[1:]
 # ms????/0?/Neeb/
@@ -10,7 +11,7 @@ subjects = sys.argv[1:]
 def main(subject):
     folders = sorted(glob.glob(subject+'/*'))
     for folder in folders:
-        print(folder)
+        #print(folder)
         contents = glob.glob(folder+'/*')
         if contents and ("ima" in contents[0]): # "ima"
             files = glob.glob(folder+'/*.ima') # ".ima
@@ -37,7 +38,7 @@ def smooth_maps(subject):
 
 for subject in subjects:
     subject = os.path.abspath(subject)
-    print(subject)
+    #print(subject)
     main(subject)
     smooth_maps(subject)
 
