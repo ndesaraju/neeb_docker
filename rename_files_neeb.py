@@ -22,11 +22,10 @@ for series in list_series:
         # else:
         #     number = int(sans_type.split('I')[-1][-4:])
 
-        anon_name = '/File_anon'+('%04d' % count)+'.ima'
+        anon_name = 'File_anon'+('%04d' % count)+'.ima'
         new_path = os.path.join(series, anon_name)
         print("new path: {0}".format(new_path))
         print("series: {0}".format(series))
-        print(new_path)
         log.info("Renaming {0} to {1}".format(filename, new_path))
         call(['mv', filename, new_path])
         count += 1
