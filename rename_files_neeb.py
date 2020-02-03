@@ -24,6 +24,7 @@ for series in list_series:
 
         anon_name = '/File_anon'+('%04d' % count)+'.ima'
         new_path = os.path.join(series, anon_name)
+        print("series: {0}".format(series))
         print(new_path)
         log.info("Renaming {0} to {1}".format(filename, new_path))
         call(['mv', filename, new_path])
