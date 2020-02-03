@@ -3,6 +3,7 @@ from subprocess import call
 import sys
 import glob
 import os
+import logging as log
 
 folder = sys.argv[1]
 list_series = glob.glob(folder+'/*')
@@ -21,6 +22,9 @@ for series in list_series:
         # else:
         #     number = int(sans_type.split('I')[-1][-4:])
 
-        print(series+'/File_anon'+('%04d' % count)+'.ima')
-        call(['mv', filename, series+'/File_anon'+('%04d' % count)+'.ima'])
+        anon_name = '/File_anon'+('%04d' % count)+'.ima'
+        new_path = os.path.join(series, anon_name)
+        print(new_path)
+        log.info("Renaming {0} to {1}".format(filename, new_path))
+        call(['mv', filename, new_path])
         count += 1
