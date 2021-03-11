@@ -56,8 +56,11 @@ if(os.path.isdir(patient_folder)):
     if os.path.exists(os.path.join(patient_folder,'Neeb')):
         print ("Neeb directory already exists. If Neeb needs to be rerun, delete Neeb folder.")
         sys.exit(1)
+    print("making neeb dir")
     os.mkdir(os.path.join(patient_folder,'Neeb'))
-    dicom_folder = sorted(glob.glob(patient_folder+'/E*'))
+    dicom_folder = sorted(glob.glob(patient_folder))
+    print("patient_folder: {0}".format(patient_folder))
+    print("dicom folder: {0}".format(dicom_folder))
     if not dicom_folder:
         sys.exit(1)
     for folder in dicom_folder:
@@ -65,6 +68,7 @@ if(os.path.isdir(patient_folder)):
             list_series = [os.path.basename(i) for i in glob.glob(folder+"/[0-9]*")]
             list_series = sorted(list_series, key=int)
             list_series = ['{}/{}'.format(folder, i) for i in list_series]
+            print("list_series: {0}".format(list_series))
         except:
             call(['rmdir', os.path.join(patient_folder,'Neeb')])
             print ("Non-integer named series... Deleting Neeb folder.")
@@ -110,7 +114,7 @@ zipped = glob.glob(os.path.join(patient_folder,'Neeb',"*")+'/*.gz')
 if zipped:
     print("unzipping the following files: {0}".format(zipped))
     call(['gunzip']+zipped)
-call(['/home/neeb_docker_utils/rename_files_neeb.py', os.path.join(patient_folder, 'Neeb')])
+call(['/data/henry2/niharika/scripts/neeb_docker_utils/rename_files_neeb.py', os.path.join(patient_folder, 'Neeb')])
 
 print("If you made it to this point that means I was able to acquire some data and will be processing it!")
 
@@ -126,9 +130,9 @@ print("I put the list of DICOMs that I'll be processing in Neeb/Neeb_ProcessingL
 print("Starting processing now...")
 
 # run Neeb processing
-call(['/home/neeb_docker_utils/predictMS', processing_list, '/home/neeb_docker_utils/MyleinProcessingMatrix.txt', os.path.join(patient_folder,'Neeb/Neeb_RunInfo.txt'), os.path.join(patient_folder,'Neeb/Neeb_RunResults.txt')])
+call(['/data/henry2/niharika/scripts/neeb_docker_utils/predictMS', processing_list, '/data/henry2/niharika/scripts/neeb_docker_utils/MyleinProcessingMatrix.txt', os.path.join(patient_folder,'Neeb/Neeb_RunInfo.txt'), os.path.join(patient_folder,'Neeb/Neeb_RunResults.txt')])
 # print pid
 
-call(['/home/neeb_docker_utils/convert_neeb_niftis3.py', os.path.join(patient_folder, 'Neeb')])
+call(['/data/henry2/niharika/scripts/neeb_docker_utils/convert_neeb_niftis3.py', os.path.join(patient_folder, 'Neeb')])
 
 print("...all done processing! Until next time :)")
