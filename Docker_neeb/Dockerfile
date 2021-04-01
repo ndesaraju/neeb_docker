@@ -11,15 +11,16 @@ RUN apt-get update -qq \
             locales \
             unzip \
             ant \
+	    python-pathlib \
     && apt-get clean
 
 
  RUN pip install --upgrade pip
  RUN pip install pydicom
 
-
 RUN apt update
-RUN apt install git -y
+RUN apt install git -y \
+		vim
 
 RUN mkdir /flywheel
 RUN mkdir /flywheel/v0

@@ -32,25 +32,25 @@ log.info("1. Welcome to Neeb! I'll be processing the data you fed me nom nom.")
 
 # prefix components:
 space =  '    '
-branch = '│   '
+branch = "|   "
 # pointers:
-tee =    '├── '
-last =   '└── '
+tee =    "├── "
+last =   "└── "
 
 
-def tree(dir_path: Path, prefix: str=''):
+def tree(dir_path=Path, prefix=''):
     """A recursive generator, given a directory Path object
     will yield a visual tree structure line by line
     with each line prefixed by the same characters
     """    
     contents = list(dir_path.iterdir())
-    # contents each get pointers that are ├── with a final └── :
+    # contents each get pointers that are with a final :
     pointers = [tee] * (len(contents) - 1) + [last]
     for pointer, path in zip(pointers, contents):
         yield prefix + pointer + path.name
         if path.is_dir(): # extend the prefix and recurse:
             extension = branch if pointer == tee else space 
-            # i.e. space because last, └── , above so no more |
+            # i.e. space because last above so no more |
             yield from tree(path, prefix=prefix+extension)
 
 
@@ -210,30 +210,6 @@ call(['/home/neeb_docker_utils/predictMS', processing_list, '/home/neeb_docker_u
 # print pid
 
 call(['/home/neeb_docker_utils/convert_neeb_niftis3.py', os.path.join(patient_folder, 'Neeb')])
-
-
-# prefix components:
-space =  '    '
-branch = '│   '
-# pointers:
-tee =    '├── '
-last =   '└── '
-
-
-def tree(dir_path: Path, prefix: str=''):
-    """A recursive generator, given a directory Path object
-    will yield a visual tree structure line by line
-    with each line prefixed by the same characters
-    """    
-    contents = list(dir_path.iterdir())
-    # contents each get pointers that are ├── with a final └── :
-    pointers = [tee] * (len(contents) - 1) + [last]
-    for pointer, path in zip(pointers, contents):
-        yield prefix + pointer + path.name
-        if path.is_dir(): # extend the prefix and recurse:
-            extension = branch if pointer == tee else space 
-            # i.e. space because last, └── , above so no more |
-            yield from tree(path, prefix=prefix+extension)
 
 for line in tree(Path("/flywheel/v0/processing/Neeb")):
     log.info("19. " + str(line))
